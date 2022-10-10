@@ -1,0 +1,12 @@
+.table {
+  thead {
+    tr {
+      th:first-child {
+        width: 300px;
+      }
+      th:last-child {
+        width: 200px;
+      }
+    }
+  }
+}
