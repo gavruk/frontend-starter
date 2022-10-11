@@ -16,6 +16,17 @@ export function* createWorker(
   }
 }
 
+export function* updateWorker(
+  data: PayloadAction<types.IUpdateProductRequest>
+) {
+  try {
+    yield call(api.update, data.payload);
+    yield put(productActions.list());
+  } catch (err: any) {
+
+  }
+}
+
 export function* deleteWorker(
   data: PayloadAction<types.IDeleteProductRequest>
 ) {
@@ -39,6 +50,7 @@ export function* listWorker() {
 export function* productWatcher() {
   yield all([
     takeEvery(productActions.create, createWorker),
+    takeEvery(productActions.update, updateWorker),
     takeEvery(productActions.delete, deleteWorker),
     takeEvery(productActions.list, listWorker),
   ]);

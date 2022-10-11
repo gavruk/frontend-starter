@@ -23,6 +23,12 @@ export const productSlice = createSlice({
     ) {
       return state;
     },
+    update(
+      state: ProductState,
+      action: PayloadAction<types.IUpdateProductRequest>,
+    ) {
+      return state;
+    },
     delete(
       state: ProductState,
       action: PayloadAction<types.IDeleteProductRequest>,

@@ -28,6 +28,10 @@ export default function Products() {
     addProductModal.open(<AddProduct />);
   };
 
+  const editProduct = (product: IProduct) => {
+    addProductModal.open(<AddProduct product={product} />);
+  };
+
   const deleteProduct = (product: IProduct) => {
     dispatch(productActions.delete({ id: product._id }));
   };
@@ -36,7 +40,7 @@ export default function Products() {
     deleteConfirmModal.open(<Confirm 
       red
       title="Confirm"
-      text={`Are you sure you want to delete ${product.name}`}
+      text={`Are you sure you want to delete ${product.name}?`}
       yesText="Delete"
       noText="Cancel"
       onConfirm={() => deleteProduct(product)}
@@ -72,7 +76,7 @@ export default function Products() {
                 <td>
                   <div className="level">
                     <span className="level-item">
-                      <button className="button">Edit</button>
+                      <button className="button" onClick={() => editProduct(p)}>Edit</button>
                     </span>
                     <span className="level-item">
                       <button className="button is-danger" onClick={() => openDeleteProduct(p)}>Delete</button>

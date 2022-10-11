@@ -7,36 +7,53 @@ import Modal from "../../components/modal/modal";
 
 import { IModalProps, withModal } from "../../hooks/useModal.hook";
 import { productActions } from "../../store/product/product.slice";
+import { IProduct } from "../../store/product/types";
 
 interface IFormData {
   name: string;
-  price: string
+  price: number
 }
 
-interface IProps extends IModalProps {}
+interface IProps extends IModalProps {
+  product?: IProduct;
+};
 
 function AddProduct({
   closeModal,
   isOpened,
+  product,
 }: IProps) {
   const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: product ? {
+      name: product.name,
+      price: product.price,
+    } : undefined,
+  });
 
   const submit = (data: IFormData) => {
-    dispatch(productActions.create({
-      name: data.name,
-      price: +data.price,
-    }));
+    if (product) {
+      dispatch(productActions.update({
+        id: product._id,
+        name: data.name,
+        price: +data.price,
+      }));
+    } else {
+      dispatch(productActions.create({
+        name: data.name,
+        price: +data.price,
+      }));
+    }
     closeModal();
   };
 
   return (
     <Modal show={isOpened} onClose={closeModal}>
-      <h3 className="title">Add Product</h3>
+      <h3 className="title">{product ? 'Update product' : 'Add Product'}</h3>
 
       <form onSubmit={handleSubmit(submit)} noValidate>
         <div className="field">
@@ -58,6 +75,7 @@ function AddProduct({
               {...register('price', { 
                 required: { value: true, message: 'Price is required' }, 
                 min: { value: 0.01, message: 'Minimum price is $0.01' },
+                valueAsNumber: true,
               })} 
             />
           </div>
@@ -66,7 +84,7 @@ function AddProduct({
 
         <div className="field">
           <div className="control">
-            <button className="button is-link">Create</button>
+            <button className="button is-link">{product ? 'Save' : 'Create'}</button>
           </div>
         </div>
       </form>

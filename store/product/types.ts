@@ -3,6 +3,10 @@ export interface ICreateProductRequest {
   price: number;
 }
 
+export interface IUpdateProductRequest extends ICreateProductRequest {
+  id: string;
+}
+
 export interface IDeleteProductRequest {
   id: string;
 }
