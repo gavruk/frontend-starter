@@ -1,7 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
-import { getUser, authActions } from "../store/auth/auth.slice";
+import { getUser, authActions } from "../../store/auth/auth.slice";
+
+import Spinner from "../spinner/spinner";
+
+import styles from './authenticated.module.scss';
 
 interface IProps {
   children: React.ReactElement;
@@ -16,7 +20,11 @@ export default function Authenticated({ children }: IProps) {
   }, [dispatch]);
 
   if (user === undefined) {
-    return <h1>Loading...</h1>;
+    return (
+      <div className={styles.spinnerContainer}>
+        <Spinner className={styles.spinner} />
+      </div>
+    );
   }
   return React.cloneElement(children)
 }

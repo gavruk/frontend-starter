@@ -5,7 +5,7 @@ import { AppProps } from "next/app";
 import { Provider } from "react-redux";
 
 import ModalContainer from "../components/modal/modal-container";
-import Authenticated from "./authenticated";
+import Authenticated from "../components/authenticated/authenticated";
 import { wrapper } from "../store/store";
 
 export default function App({ Component, ...rest }: AppProps) {
